@@ -132,7 +132,7 @@ post '/hit' do
     session[:player_card_value_adj] = session[:player_card_value_min]
   end
 
-  if session[:player_card_value_adj] > 21
+  if session[:player_card_value_adj] >= 21
     erb :result
   else
     erb :game
