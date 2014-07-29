@@ -1,0 +1,51 @@
+<html>
+<head>
+	<link href="/css/bootstrap.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.css" rel="stylesheet">
+</head>
+<body>
+<div class="well">
+<h5><%= session[:username] %>'s cards:</h5>
+  <% session[:player_cards].each do |num| %>
+    <%= card_image(num) %>
+  <% end %>
+
+<h4><%= session[:username] %> has <%= session[:player_card_value_adj] %>.</h4>
+
+<h5>Dealer's cards:</h5>
+  <% session[:dealer_cards].each do |num| %>
+    <%= card_image(num) %>
+  <% end %>
+
+<h4>Dealer has <%= session[:dealer_card_value_adj] %>.</h4>
+
+<% if session[:player_card_value_adj] > 21 %>
+  <h4><%= session[:username] %> busts and loses! </h4>
+<% elsif session[:player_card_value_adj] == 21 %>
+  <h4><%= session[:username] %> wins with blackjack! </h4>
+<% elsif session[:dealer_card_value_adj] > 21 %>
+  <h4><%= session[:username] %> wins because Dealer busted! </h4>    
+<% elsif session[:dealer_card_value_adj] == 21 %>
+  <h4><%= session[:username] %> loses because Dealer hit blackjack! </h4>  
+<% elsif session[:dealer_card_value_adj] > session[:player_card_value_adj] %>
+  <h4><%= session[:username] %> loses because Dealer's cards are worth more! </h4>     
+<% elsif session[:dealer_card_value_adj] < session[:player_card_value_adj] %>
+  <h4><%= session[:username] %> wins because his/her cards are worth more! </h4> 
+<% elsif session[:dealer_card_value_adj] == session[:player_card_value_adj]  %>
+  <h4>It is a tie.</h4> 
+<% end %>
+
+
+<h3> Play again? </h3>
+
+	<form action='play_again' method='post'>
+		<input type="submit" class="btn" value="Yes"/>
+	</form>
+	<form action='back_to_home' method='post'>
+		<input type="submit" class="btn" value="No"/>
+	</form>
+
+</div>
+<script src="/js/bootstrap.min.js"></script>
+<body>
+</html>
